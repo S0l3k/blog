@@ -10,5 +10,9 @@ class Post(models.Model):
     create = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ['-publish']
+        indexes = [models.Index(fields=['-publish']), ]
+
     def __str__(self):
         return self.title
