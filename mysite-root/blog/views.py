@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Post
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def post_list(request):
@@ -8,7 +8,14 @@ def post_list(request):
     # Постраничная разбивка страницы по 3 поста на страницу
     paginator = Paginator(post_list, 3)
     page_number = request.GET.get('page', 1)
-    posts = paginator.page(page_number)
+    try:
+        posts = paginator.page(page_number)
+    except EmptyPage:
+        # Если page_number находится вне диапазона, тогда выдать последнюю страницу
+        posts = paginator.page(paginator.num_pages)
+    except PageNotAnInteger:
+        # Если page_number не целое число, тогда выдать первую страницу
+        posts = paginator.page(1)
     return render(request, 'blog/post/list.html', {'posts': posts})
 
 
