@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import Post
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import ListView
+from .forms import EmailPostForm
 
 
 def post_list(request):
@@ -36,3 +37,20 @@ class PostListView(ListView):
     context_object_name = 'posts'
     pagination_by = 3
     template_name = 'blog/post/list.html'
+
+
+def post_share(request, post_id):
+    # Извлечение поста по id
+    post = get_object_or_404(Post, id=post_id, status=Post.Status.PUBLISHED)
+
+    if request.method == 'POST':
+        # Передача формы на обработку
+        form = EmailPostForm(request.POST)
+        # Проверка на валидацию
+        if form.is_valid():
+            # Извлечение данных из формы и отправка письма
+            cd = form.cleaned_data
+    else:
+        form = EmailPostForm()
+    return render(request, 'blog/post/share.html', {'post': post,
+                                                    'form': form})
