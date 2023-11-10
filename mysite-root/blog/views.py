@@ -1,10 +1,15 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404
 from .models import Post
+from django.core.paginator import Paginator
 
 
 def post_list(request):
     posts = Post.published.all()
+    # Постраничная разбивка страницы по 3 поста на страницу
+    paginator = Paginator(post_list, 3)
+    page_number = request.GET.get('page', 1)
+    post = paginator.page(page_number)
     return render(request, 'blog/post/list.html', {'posts': posts})
 
 
