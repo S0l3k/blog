@@ -117,3 +117,18 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Конфигурация почтового сервера
+# EMAIL_HOST = хост SMTP-сервера; по умолчанию используется localhost
+EMAIL_HOST = 'smtp.gmail.com'
+#  EMAIL_PORT = пользовательское имя для SMTP-сервера
+EMAIL_HOST_USER = ''
+# EMAIL_HOST_PASSWORD = пароль для SMTP-сервера
+EMAIL_HOST_PASSWORD = ''
+#  EMAIL_PORT = SMTP-порт; по умолчанию равен 25
+EMAIL_PORT = 587
+# EMAIL_USE_TLS = следует ли использовать защищенное соединение транспортного слоя (TLS)
+# EMAIL_USE_SSL = следует ли использовать неявное защищенное соединение TLS
+EMAIL_USE_TLS = True
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'- позволяет выводить все электронные письма
+# в  оболочку, не отправляя их
