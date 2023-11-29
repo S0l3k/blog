@@ -39,7 +39,9 @@ def post_detail(request, year, month, day, post):
 
 
 class PostListView(ListView):
-    """" Альтернативное представление списка постов """
+    """"
+    Альтернативное представление списка постов
+    """
     queryset = Post.published.all()
     context_object_name = 'posts'
     pagination_by = 3
