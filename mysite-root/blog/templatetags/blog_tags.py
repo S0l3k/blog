@@ -9,3 +9,10 @@ register = template.Library()
 def total_posts():
     # Возвращает число опубликованных в блоге постов
     return Post.published.count()
+
+
+@register.inclusion_tag('blog/post/latest_posts.html')
+def show_latest_posts(count=5):
+    # Вывод последних постов с ограничением по кол-ву в 5
+    latest_posts = Post.published.order_by('-publish')[:count]
+    return {'latest_posts': latest_posts}
